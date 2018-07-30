@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kooola.cloudbookmark.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.kooola.cloudbookmark.domain.User">
+        <id column="uid" jdbcType="INTEGER" property="uid" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="create_time" jdbcType="INTEGER" property="createTime" />
+        <result column="update_time" jdbcType="INTEGER" property="updateTime" />
+        <result column="last_login_time" jdbcType="INTEGER" property="lastLoginTime" />
+        <result column="sex" jdbcType="INTEGER" property="sex" />
+        <result column="age" jdbcType="INTEGER" property="age" />
+        <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+        <result column="salt" jdbcType="VARCHAR" property="salt" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        uid, username, password, email, create_time, update_time, last_login_time, sex, age, introduction, salt
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_user
+        where uid = #{uid,jdbcType=INTEGER}
+    </select>
+
+    <select id = "selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_user
+        where username = #{username,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_users
+        where uid = #{uid,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.kooola.cloudbookmark.domain.User" useGeneratedKeys="true" keyProperty="uid">
+        insert into t_user (uid, username, password, email, create_time,
+        update_time,last_login_time, sex, age, introduction, salt)
+        values (#{uid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=INTEGER}, #{updateTime,jdbcType=INTEGER},
+        #{lastLoginTime,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, #{age,jdbcType=INTEGER},
+        #{introduction,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR})
+    </insert>
+
+</mapper>
