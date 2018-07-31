@@ -1,4 +1,4 @@
-package com.kooola.cloudbookmark.common;
+package com.kooola.cloudbookmark.common.exception;
 
 /**
  * Created by march on 2018/7/26.

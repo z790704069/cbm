@@ -1,8 +1,8 @@
 package com.kooola.cloudbookmark.service.impl;
 
-import com.kooola.cloudbookmark.common.MyException;
-import com.kooola.cloudbookmark.common.NormalConstants;
-import com.kooola.cloudbookmark.common.ResultConstants;
+import com.kooola.cloudbookmark.common.exception.MyException;
+import com.kooola.cloudbookmark.common.constants.NormalConstant;
+import com.kooola.cloudbookmark.common.constants.ResultConstant;
 import com.kooola.cloudbookmark.dao.UserMapper;
 import com.kooola.cloudbookmark.domain.User;
 import com.kooola.cloudbookmark.service.UserService;
@@ -24,17 +24,17 @@ public class UserServiceImpl implements UserService{
     @Override
     public User login(String username, String password) {
         if(StringUtils.isBlank(username) || StringUtils.isBlank(password)){
-            throw new MyException(ResultConstants.CBM_USERNAME_PASSWD_EMPTY);  //用户名或密码为空
+            throw new MyException(ResultConstant.CBM_USERNAME_PASSWD_EMPTY);  //用户名或密码为空
         }
         User user = userMapper.selectByUsername(username);
         if(null == user){
-            throw new MyException(ResultConstants.CBM_USERNAME_NOT_EXIST);  //用户不存在
+            throw new MyException(ResultConstant.CBM_USERNAME_NOT_EXIST);  //用户不存在
         }
         if(null != user.getSalt()){
             password = password + user.getSalt();
         }
         if(!SecurityUtil.MD5encode(password).equals(user.getPassword())){
-            throw new MyException(ResultConstants.CBM_PASSWORD_NOT_RIGHT);  //密码不正确
+            throw new MyException(ResultConstant.CBM_PASSWORD_NOT_RIGHT);  //密码不正确
         }
         return user;
     }
@@ -42,9 +42,9 @@ public class UserServiceImpl implements UserService{
     @Override
     public void register(User user) {
         if(null != userMapper.selectByUsername(user.getUsername())){
-            throw new MyException(ResultConstants.CBM_USER_ALREADY_EXIST);  //用户已经存在
+            throw new MyException(ResultConstant.CBM_USER_ALREADY_EXIST);  //用户已经存在
         }
-        String salt = RandomStringUtils.randomAlphanumeric(NormalConstants.SALT_LENGTH);  //随机生成固定长度的盐
+        String salt = RandomStringUtils.randomAlphanumeric(NormalConstant.SALT_LENGTH);  //随机生成固定长度的盐
         user.setSalt(salt);
         user.setPassword(SecurityUtil.MD5encode((user.getPassword() + salt)));
 

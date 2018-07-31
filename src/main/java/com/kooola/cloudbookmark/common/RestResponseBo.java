@@ -4,6 +4,8 @@ package com.kooola.cloudbookmark.common;
  * Created by march on 2018/7/26.
  */
 
+import com.kooola.cloudbookmark.common.constants.ResultConstant;
+
 import java.io.Serializable;
 
 /**
@@ -48,7 +50,7 @@ public class RestResponseBo<T> implements Serializable{
 
     private void setCodeMsg(String code){
         setCode(code);
-        setMsg(ResultConstants.resultInfosMap.get(code));
+        setMsg(ResultConstant.resultInfosMap.get(code));
         setTimestamp(System.currentTimeMillis() / 1000);
     }
 

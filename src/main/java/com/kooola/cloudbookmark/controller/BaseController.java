@@ -1,7 +1,7 @@
 package com.kooola.cloudbookmark.controller;
 
 import com.kooola.cloudbookmark.common.RestResponseBo;
-import com.kooola.cloudbookmark.common.ResultConstants;
+import com.kooola.cloudbookmark.common.constants.ResultConstant;
 import com.kooola.cloudbookmark.domain.User;
 import com.kooola.cloudbookmark.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class BaseController {
         }catch (Exception e){
             return new RestResponseBo(e.getMessage());
         }
-        return new RestResponseBo(ResultConstants.SUCCESS, user);
+        return new RestResponseBo(ResultConstant.SUCCESS, user);
     }
 
     @GetMapping(value = "register")
@@ -38,6 +38,6 @@ public class BaseController {
             return new RestResponseBo(e.getMessage());
         }
 
-        return new RestResponseBo(ResultConstants.SUCCESS);
+        return new RestResponseBo(ResultConstant.SUCCESS);
     }
 }
