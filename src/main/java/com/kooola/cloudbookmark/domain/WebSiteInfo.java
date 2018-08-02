@@ -45,11 +45,11 @@ public class WebSiteInfo {
         this.logoUrl = logoUrl;
     }
 
-    public String getDomain() {
+    public String getHost() {
         return host;
     }
 
-    public void setDomain(String host) {
+    public void setHost(String host) {
         this.host = host;
     }
 }

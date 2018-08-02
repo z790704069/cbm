@@ -8,13 +8,14 @@
         <result column="title" jdbcType="VARCHAR" property="title" />
         <result column="description" jdbcType="VARCHAR" property="description" />
         <result column="logo_url" jdbcType="VARCHAR" property="logoUrl" />
+        <result column="host" jdbcType="VARCHAR" property="host" />
         <result column="point_praise_num" jdbcType="INTEGER" property="pointPraiseNum" />
         <result column="create_time" jdbcType="INTEGER" property="createTime" />
         <result column="logicdelete" jdbcType="INTEGER" property="logicdelete" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        bmid, uid, url, title, description, logo_url, point_praise_num, create_time, logicdelete
+        bmid, uid, url, title, description, logo_url, host, point_praise_num, create_time, logicdelete
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -30,10 +31,10 @@
     </delete>
 
     <insert id="insert" parameterType="com.kooola.cloudbookmark.domain.BookMark" useGeneratedKeys="true" keyProperty="bmid">
-        insert into t_bookmark (uid, url, title, description, logo_url, point_praise_num, create_time, logicdelete)
+        insert into t_bookmark (uid, url, title, description, logo_url, host, point_praise_num, create_time, logicdelete)
         values (#{uid,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
-        #{description,jdbcType=VARCHAR}, #{logoUrl,jdbcType=VARCHAR}, #{pointPraiseNum,jdbcType=INTEGER},
-        #{createTime,jdbcType=INTEGER}, #{logicdelete})
+        #{description,jdbcType=VARCHAR}, #{logoUrl,jdbcType=VARCHAR}, #{host,jdbcType=VARCHAR},
+        #{pointPraiseNum,jdbcType=INTEGER}, #{createTime,jdbcType=INTEGER}, #{logicdelete})
     </insert>
 
     <select id="selectByUid" parameterType="java.lang.Integer" resultMap="BaseResultMap">

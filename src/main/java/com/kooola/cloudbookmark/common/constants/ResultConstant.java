@@ -17,6 +17,7 @@ public class ResultConstant {
     public static final String CBM_USER_ALREADY_EXIST = "20003"; //用户已存在
     public static final String CBM_NOT_LOGIN = "20004";          //用户未登陆（权限控制：无权限）
 
+    public static final String CBM_HTML_GET_OR_PARSER_FAIL = "30001";       //抓取页面失败，书签无法生存
 
     public static final Map<String, String> resultInfosMap = new HashMap();
 
@@ -28,5 +29,6 @@ public class ResultConstant {
         resultInfosMap.put(CBM_PASSWORD_NOT_RIGHT, "密码不正确");
         resultInfosMap.put(CBM_USER_ALREADY_EXIST, "用户已存在");
         resultInfosMap.put(CBM_NOT_LOGIN, "用户未登陆");
+        resultInfosMap.put(CBM_HTML_GET_OR_PARSER_FAIL, "抓取页面失败，书签无法生存");
     }
 }

@@ -27,6 +27,8 @@ public class BookMarkServiceImpl implements BookMarkService {
         if(null == bookMark.getCreateTime()){
             bookMark.setCreateTime(System.currentTimeMillis() / 1000);
         }
+        bookMark.setPointPraiseNum(0l);
+        bookMark.setLogicdelete(0);
         bookMarkMapper.insert(bookMark);
         return 0;
     }

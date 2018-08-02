@@ -43,6 +43,11 @@ public class BookMark {
      */
     private Integer logicdelete;
 
+    /**
+     * 书签域名
+     */
+    private String host;
+
     public Long getBmid() {
         return bmid;
     }
@@ -113,5 +118,13 @@ public class BookMark {
 
     public void setLogicdelete(Integer logicdelete) {
         this.logicdelete = logicdelete;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
     }
 }
