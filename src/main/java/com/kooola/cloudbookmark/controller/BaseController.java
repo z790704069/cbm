@@ -2,10 +2,16 @@ package com.kooola.cloudbookmark.controller;
 
 import com.kooola.cloudbookmark.common.RestResponseBo;
 import com.kooola.cloudbookmark.common.constants.ResultConstant;
+import com.kooola.cloudbookmark.common.constants.WebConst;
 import com.kooola.cloudbookmark.domain.User;
 import com.kooola.cloudbookmark.service.UserService;
+import com.kooola.cloudbookmark.utils.HttpUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by march on 2018/7/26.
@@ -17,19 +23,25 @@ public class BaseController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "login")
+    @PostMapping(value = "login")
     @ResponseBody
-    public RestResponseBo doLogin(@RequestParam String username, @RequestParam String password){
+    public RestResponseBo doLogin(@RequestParam String username, @RequestParam String password,
+                                  @RequestParam(required = false) String remeber_me,
+                                  HttpServletRequest request, HttpServletResponse response){
         User user = null;
         try{
             user = userService.login(username, password);
+            request.getSession().setAttribute(WebConst.LOGIN_SESSION_KEY, user);
+            if(StringUtils.isNotBlank(remeber_me)){
+                HttpUtil.setCookie(response, user.getUid());
+            }
         }catch (Exception e){
             return new RestResponseBo(e.getMessage());
         }
         return new RestResponseBo(ResultConstant.SUCCESS, user);
     }
 
-    @GetMapping(value = "register")
+    @PostMapping(value = "register")
     @ResponseBody
     public RestResponseBo doRegister(User user){
         try{

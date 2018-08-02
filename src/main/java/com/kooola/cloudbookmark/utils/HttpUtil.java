@@ -90,6 +90,26 @@ public class HttpUtil {
         return null;
     }
 
+    /**
+     * 设置记住cookie
+     *
+     * @param response
+     * @param uid
+     */
+    public static void setCookie(HttpServletResponse response, Long uid) {
+        try {
+            String val = SecurityUtil.encryptAes(uid.toString(), WebConst.AES_SALT);
+            boolean isSSL = false;
+            Cookie cookie = new Cookie(WebConst.USER_IN_COOKIE, val);
+            cookie.setPath("/");
+            cookie.setMaxAge(60 * 30);
+            cookie.setSecure(isSSL);
+            response.addCookie(cookie);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void outputObject(HttpServletResponse response, Object pm){
         PrintWriter pw = null;
         try {

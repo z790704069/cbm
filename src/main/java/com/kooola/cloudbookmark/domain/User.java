@@ -4,8 +4,12 @@ import java.io.Serializable;
 
 /**
  * Created by march on 2018/7/26.
+ * 用户类
  */
 public class User implements Serializable{
+    /**
+     * 主键id
+     */
     private Long uid;
     /**
      * 用户昵称
@@ -20,15 +24,15 @@ public class User implements Serializable{
      */
     private String email;
     /**
-     * 注册时间
+     * 注册时的时间戳
      */
     private Long createTime;
     /**
-     * 资料更新时间
+     * 资料更新时间戳
      */
     private Long updateTime;
     /**
-     * 上次登录时间
+     * 上次登录时间戳
      */
     private Long lastLoginTime;
     /**

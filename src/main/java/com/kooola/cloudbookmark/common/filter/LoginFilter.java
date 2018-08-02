@@ -1,6 +1,7 @@
 package com.kooola.cloudbookmark.common.filter;
 
 import com.kooola.cloudbookmark.common.RestResponseBo;
+import com.kooola.cloudbookmark.common.UserThreadLoacl;
 import com.kooola.cloudbookmark.common.constants.ResultConstant;
 import com.kooola.cloudbookmark.common.constants.WebConst;
 import com.kooola.cloudbookmark.common.exception.MyException;
@@ -36,6 +37,7 @@ public class LoginFilter implements Filter{
         greenUrlSet.add("/register");
         greenUrlSet.add("/");
         greenUrlSet.add("/about");
+        greenUrlSet.add("/favicon.ico");
     }
 
     @Override
@@ -62,6 +64,7 @@ public class LoginFilter implements Filter{
 //                request.getSession().setAttribute(WebConst.LOGIN_SESSION_KEY, user);
 //            }
         }
+        UserThreadLoacl.setValue(user);
         filterChain.doFilter(servletRequest,servletResponse);
         return;
     }
