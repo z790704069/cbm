@@ -17,4 +17,6 @@ public interface BookMarkMapper {
     public int deleteByPrimaryKey(Integer bmid);
 
     public ArrayList<BookMark> selectByUid(Integer uid);
+
+    public int updatePointPraiseById(BookMark bookMark);
 }

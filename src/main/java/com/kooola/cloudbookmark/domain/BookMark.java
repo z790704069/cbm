@@ -1,5 +1,7 @@
 package com.kooola.cloudbookmark.domain;
 
+import org.springframework.beans.factory.annotation.Value;
+
 /**
  * Created by march on 2018/8/1.
  * 书签类
@@ -33,7 +35,7 @@ public class BookMark {
     /**
      * 点赞数
      */
-    private Long pointPraiseNum;
+    private Long pointPraiseNum = 0l;
     /**
      * 创建的时间戳
      */
@@ -41,7 +43,12 @@ public class BookMark {
     /**
      * 是否逻辑删除 0：否 1：是
      */
-    private Integer logicdelete;
+    private Integer logicdelete = 0;
+
+    /**
+     * 是否已读 0：未读  1：已读
+     */
+    private Integer isRead = 0;
 
     /**
      * 书签域名
@@ -126,5 +133,13 @@ public class BookMark {
 
     public void setHost(String host) {
         this.host = host;
+    }
+
+    public Integer getIsRead() {
+        return isRead;
+    }
+
+    public void setIsRead(Integer isRead) {
+        this.isRead = isRead;
     }
 }

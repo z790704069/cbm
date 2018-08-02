@@ -21,4 +21,13 @@ public interface BookMarkService {
      * @return
      */
     public int addBookMark(BookMark bookMark);
+
+
+    /**
+     * 为指定文章点赞
+     * @param bmid
+     * @param up
+     * @return
+     */
+    public int pointPraise(Integer bmid, boolean up);
 }
