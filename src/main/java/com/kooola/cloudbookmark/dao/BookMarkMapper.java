@@ -19,4 +19,6 @@ public interface BookMarkMapper {
     public ArrayList<BookMark> selectByUid(Integer uid);
 
     public int updatePointPraiseById(BookMark bookMark);
+
+    public int updateIsReadById(BookMark bookMark);
 }

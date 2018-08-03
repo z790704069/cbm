@@ -1,10 +1,8 @@
 package com.kooola.cloudbookmark.common.filter;
 
-import com.kooola.cloudbookmark.common.RestResponseBo;
+import com.kooola.cloudbookmark.common.RestResponseModel;
 import com.kooola.cloudbookmark.common.UserThreadLoacl;
 import com.kooola.cloudbookmark.common.constants.ResultConstant;
-import com.kooola.cloudbookmark.common.constants.WebConst;
-import com.kooola.cloudbookmark.common.exception.MyException;
 import com.kooola.cloudbookmark.dao.UserMapper;
 import com.kooola.cloudbookmark.domain.User;
 import com.kooola.cloudbookmark.utils.HttpUtil;
@@ -56,7 +54,7 @@ public class LoginFilter implements Filter{
         User user = (User) HttpUtil.getLoginUser(request);
         if(null == user){
             HttpUtil.outputObject((HttpServletResponse)servletResponse,
-                    new RestResponseBo(ResultConstant.CBM_NOT_LOGIN));
+                    new RestResponseModel(ResultConstant.CBM_NOT_LOGIN));
             return;
 //            Integer uid = HttpUtil.getUidFromCookie(request);
 //            if(null != uid){

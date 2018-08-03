@@ -1,6 +1,6 @@
 package com.kooola.cloudbookmark.controller;
 
-import com.kooola.cloudbookmark.common.RestResponseBo;
+import com.kooola.cloudbookmark.common.RestResponseModel;
 import com.kooola.cloudbookmark.common.UserThreadLoacl;
 import com.kooola.cloudbookmark.common.constants.ResultConstant;
 import com.kooola.cloudbookmark.domain.BookMark;
@@ -31,13 +31,13 @@ public class BookMarkController {
      */
     @PostMapping(value = "bookmarks")
     @ResponseBody
-    public RestResponseBo addBookMarkWithUrl(@RequestParam String url, HttpServletRequest request){
+    public RestResponseModel addBookMarkWithUrl(@RequestParam String url, HttpServletRequest request){
         User user = UserThreadLoacl.getUser();
         WebSiteInfo webSiteInfo = null;
         try{
             webSiteInfo = HtmlParserUtil.process(url);
         }catch (Exception e){
-            return new RestResponseBo(e.getMessage());
+            return new RestResponseModel(e.getMessage());
         }
         BookMark bookMark = new BookMark();
         bookMark.setTitle(webSiteInfo.getTitle());
@@ -46,7 +46,7 @@ public class BookMarkController {
         bookMark.setHost(webSiteInfo.getHost());
         bookMark.setUid(user.getUid());
         bookMarkService.addBookMark(bookMark);
-        return new RestResponseBo(ResultConstant.SUCCESS, bookMark);
+        return new RestResponseModel(ResultConstant.SUCCESS, bookMark);
     }
 
 
@@ -56,25 +56,45 @@ public class BookMarkController {
      */
     @GetMapping(value = "bookmarks")
     @ResponseBody
-    public RestResponseBo getBookMarks(){
+    public RestResponseModel getBookMarks(){
         User user = UserThreadLoacl.getUser();
         ArrayList<BookMark> bookMarks = bookMarkService.getBookMarksByUser(user.getUid().intValue());
-        return new RestResponseBo(ResultConstant.SUCCESS, bookMarks);
+        return new RestResponseModel(ResultConstant.SUCCESS, bookMarks);
     }
 
 
     /**
-     * 指定书签点赞、取消点赞
+     * 指定书签点赞或取消点赞
      * @param bmid
      * @param up up=ture:点赞数加1  up=false 点赞数减1
      * @return
      */
     @PutMapping(value = "bookmarks/{bmid}/pointPraise")
     @ResponseBody
-    public RestResponseBo bookmarkRead(@PathVariable Integer bmid, @RequestParam boolean up){
-        User user = UserThreadLoacl.getUser();
-        bookMarkService.pointPraise(bmid, up);
-        return new RestResponseBo(ResultConstant.SUCCESS);
+    public RestResponseModel praise(@PathVariable Integer bmid, @RequestParam boolean up){
+        try{
+            bookMarkService.pointPraise(bmid, up);
+        }catch (Exception e){
+            return new RestResponseModel(ResultConstant.CBM_BOOKMARK_NOT_EXIST);
+        }
+        return new RestResponseModel(ResultConstant.SUCCESS);
+    }
+
+    /**
+     * 指定书签标记为已读或未读
+     * @param bmid
+     * @param isRead true:已读 false:未读
+     * @return
+     */
+    @PutMapping(value = "bookmarks/{bmid}/read")
+    @ResponseBody
+    public RestResponseModel read(@PathVariable Integer bmid, @RequestParam boolean isRead){
+        try{
+            bookMarkService.read(bmid, isRead);
+        }catch (Exception e){
+            return new RestResponseModel(ResultConstant.CBM_BOOKMARK_NOT_EXIST);
+        }
+        return new RestResponseModel(ResultConstant.SUCCESS);
     }
 
 

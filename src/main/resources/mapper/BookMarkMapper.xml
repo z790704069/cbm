@@ -53,4 +53,10 @@
         where bmid = #{bmid,jdbcType=INTEGER}
     </update>
 
+    <update id="updateIsReadById" parameterType="com.kooola.cloudbookmark.domain.BookMark">
+        update t_bookmark
+        set isread = #{isRead, jdbcType=INTEGER}
+        where bmid = #{bmid,jdbcType=INTEGER}
+    </update>
+
 </mapper>

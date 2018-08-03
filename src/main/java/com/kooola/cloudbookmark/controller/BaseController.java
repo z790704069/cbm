@@ -1,6 +1,6 @@
 package com.kooola.cloudbookmark.controller;
 
-import com.kooola.cloudbookmark.common.RestResponseBo;
+import com.kooola.cloudbookmark.common.RestResponseModel;
 import com.kooola.cloudbookmark.common.constants.ResultConstant;
 import com.kooola.cloudbookmark.common.constants.WebConst;
 import com.kooola.cloudbookmark.domain.User;
@@ -25,9 +25,9 @@ public class BaseController {
 
     @PostMapping(value = "login")
     @ResponseBody
-    public RestResponseBo doLogin(@RequestParam String username, @RequestParam String password,
-                                  @RequestParam(required = false) String remeber_me,
-                                  HttpServletRequest request, HttpServletResponse response){
+    public RestResponseModel doLogin(@RequestParam String username, @RequestParam String password,
+                                     @RequestParam(required = false) String remeber_me,
+                                     HttpServletRequest request, HttpServletResponse response){
         User user = null;
         try{
             user = userService.login(username, password);
@@ -36,20 +36,20 @@ public class BaseController {
                 HttpUtil.setCookie(response, user.getUid());
             }
         }catch (Exception e){
-            return new RestResponseBo(e.getMessage());
+            return new RestResponseModel(e.getMessage());
         }
-        return new RestResponseBo(ResultConstant.SUCCESS, user);
+        return new RestResponseModel(ResultConstant.SUCCESS, user);
     }
 
     @PostMapping(value = "register")
     @ResponseBody
-    public RestResponseBo doRegister(User user){
+    public RestResponseModel doRegister(User user){
         try{
             userService.register(user);
         }catch (Exception e){
-            return new RestResponseBo(e.getMessage());
+            return new RestResponseModel(e.getMessage());
         }
 
-        return new RestResponseBo(ResultConstant.SUCCESS);
+        return new RestResponseModel(ResultConstant.SUCCESS);
     }
 }

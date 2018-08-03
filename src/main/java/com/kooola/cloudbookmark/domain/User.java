@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 public class User implements Serializable{
     /**
-     * 主键id
+     * 主键ID
      */
     private Long uid;
     /**

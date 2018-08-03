@@ -13,7 +13,7 @@ import java.io.Serializable;
  *^
  * @param <T>
  */
-public class RestResponseBo<T> implements Serializable{
+public class RestResponseModel<T> implements Serializable{
 
     /**
      * 服务器响应数据
@@ -39,12 +39,12 @@ public class RestResponseBo<T> implements Serializable{
 
 
 
-    public RestResponseBo(String code, T payload){
+    public RestResponseModel(String code, T payload){
         setCodeMsg(code);
         setModel(payload);
     }
 
-    public RestResponseBo(String code){
+    public RestResponseModel(String code){
         setCodeMsg(code);
     }
 

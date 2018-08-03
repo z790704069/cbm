@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Value;
  */
 public class BookMark {
     /**
-     * 主键id
+     * 主键ID
      */
     private Long bmid;
 
     /**
-     * 用户id
+     * 用户ID
      */
     private Long uid;
     /**

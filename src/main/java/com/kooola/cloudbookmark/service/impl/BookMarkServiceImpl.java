@@ -39,6 +39,7 @@ public class BookMarkServiceImpl implements BookMarkService {
             throw new MyException(ResultConstant.CBM_BOOKMARK_NOT_EXIST);
         }
         Long praiseNum = bookMark.getPointPraiseNum();
+        //根据up的值来决定点赞数是 +1 还是 -1
         if(up){
             praiseNum = praiseNum + 1;
         }else {
@@ -46,6 +47,23 @@ public class BookMarkServiceImpl implements BookMarkService {
         }
         bookMark.setPointPraiseNum(praiseNum);
         bookMarkMapper.updatePointPraiseById(bookMark);
+        return 0;
+    }
+
+    @Override
+    public int read(Integer bmid, boolean read) {
+        BookMark bookMark = bookMarkMapper.selectByPrimaryKey(bmid);
+        if(null == bookMark){
+            throw new MyException(ResultConstant.CBM_BOOKMARK_NOT_EXIST);
+        }
+        Integer isRead = bookMark.getIsRead();
+        Integer isReadParam = read ? 1 : 0;
+        //如果预设值的值跟数据库中相同则不需要操作数据库
+        if(isRead == isReadParam){
+            return 0;
+        }
+        bookMark.setIsRead(isReadParam);
+        bookMarkMapper.updateIsReadById(bookMark);
         return 0;
     }
 }

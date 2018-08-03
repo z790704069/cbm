@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kooola.cloudbookmark.dao.CatalogMapper">
+    <resultMap id="BaseResultMap" type="com.kooola.cloudbookmark.domain.Catalog">
+        <id column="catalogid" jdbcType="INTEGER" property="catalogid" />
+        <result column="uid" jdbcType="INTEGER" property="uid" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="father" jdbcType="INTEGER" property="father" />
+        <result column="level" jdbcType="INTEGER" property="level" />
+        <result column="layer" jdbcType="VARCHAR" property="layer" />
+        <result column="create_time" jdbcType="INTEGER" property="createTime" />
+        <result column="logicdelete" jdbcType="INTEGER" property="logicdelete" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        catalogid, uid, name, father, level, layer, create_time, logicdelete
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_catalog
+        where catalogid = #{catalogid,jdbcType=INTEGER} and logicdelete = 0
+    </select>
+
+    <select id="selectByUid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_catalog
+        where uid = #{uid,jdbcType=INTEGER}
+        and logicdelete = 0
+    </select>
+
+    <select id="selectByUidAndLevel"   resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_catalog
+        where uid = #{arg0}
+        and level = #{arg1}
+        and logicdelete = 0
+        order by layer desc limit 1
+    </select>
+
+
+    <insert id="insert" parameterType="com.kooola.cloudbookmark.domain.Catalog" useGeneratedKeys="true" keyProperty="catalogid">
+        insert into t_catalog (uid, name, father, level, layer, create_time, logicdelete)
+        values (#{uid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{father,jdbcType=INTEGER},
+        #{level,jdbcType=INTEGER}, #{layer,jdbcType=VARCHAR}, #{createTime,jdbcType=INTEGER},
+        #{logicdelete, jdbcType=INTEGER})
+    </insert>
+</mapper>
