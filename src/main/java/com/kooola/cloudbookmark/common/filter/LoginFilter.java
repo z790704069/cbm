@@ -3,6 +3,7 @@ package com.kooola.cloudbookmark.common.filter;
 import com.kooola.cloudbookmark.common.RestResponseModel;
 import com.kooola.cloudbookmark.common.UserThreadLoacl;
 import com.kooola.cloudbookmark.common.constants.ResultConstant;
+import com.kooola.cloudbookmark.common.constants.WebConst;
 import com.kooola.cloudbookmark.dao.UserMapper;
 import com.kooola.cloudbookmark.domain.User;
 import com.kooola.cloudbookmark.utils.HttpUtil;
@@ -43,8 +44,8 @@ public class LoginFilter implements Filter{
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         String contextPath = request.getContextPath();
         String uri = request.getRequestURI();
-        LOG.info("http request: {}, ip: {}, UserAgent: {}", uri,
-                HttpUtil.getIpAddrByRequest(request), request.getHeader(USER_AGENT));
+        LOG.info("http request: {}, ip: {},http method: {}, UserAgent: {}", uri,
+                HttpUtil.getIpAddrByRequest(request), request.getMethod(), request.getHeader(USER_AGENT));
 
         //不需要检查权限的接口，直接进行调用
         if(greenUrlSet.contains(uri)){
@@ -52,18 +53,23 @@ public class LoginFilter implements Filter{
             return;
         }
         User user = (User) HttpUtil.getLoginUser(request);
-        if(null == user){
-            HttpUtil.outputObject((HttpServletResponse)servletResponse,
-                    new RestResponseModel(ResultConstant.CBM_NOT_LOGIN));
+
+        if(null != user){
+            UserThreadLoacl.setValue(user);
+            filterChain.doFilter(servletRequest,servletResponse);
             return;
-//            Integer uid = HttpUtil.getUidFromCookie(request);
-//            if(null != uid){
-//                user = userMapper.selectByPrimaryKey(uid);
-//                request.getSession().setAttribute(WebConst.LOGIN_SESSION_KEY, user);
-//            }
         }
-        UserThreadLoacl.setValue(user);
-        filterChain.doFilter(servletRequest,servletResponse);
+
+        Integer uid = HttpUtil.getUidFromCookie(request);
+        if(null != uid){
+            user = userMapper.selectByPrimaryKey(uid);
+            request.getSession().setAttribute(WebConst.LOGIN_SESSION_KEY, user);
+            UserThreadLoacl.setValue(user);
+            filterChain.doFilter(servletRequest,servletResponse);
+            return;
+        }
+        HttpUtil.outputObject((HttpServletResponse)servletResponse,
+                new RestResponseModel(ResultConstant.CBM_NOT_LOGIN));
         return;
     }
 

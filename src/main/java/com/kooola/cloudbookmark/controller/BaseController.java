@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -39,6 +40,17 @@ public class BaseController {
             return new RestResponseModel(e.getMessage());
         }
         return new RestResponseModel(ResultConstant.CBM_SUCCESS, user);
+    }
+
+    @PostMapping(value = "logout")
+    @ResponseBody
+    public RestResponseModel doLogout(HttpServletRequest request, HttpServletResponse response){
+        request.getSession().removeAttribute(WebConst.LOGIN_SESSION_KEY);
+        Cookie cookie = new Cookie(WebConst.USER_IN_COOKIE, "");
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        return new RestResponseModel(ResultConstant.CBM_SUCCESS);
     }
 
     @PostMapping(value = "register")
