@@ -38,7 +38,7 @@ public class BaseController {
         }catch (Exception e){
             return new RestResponseModel(e.getMessage());
         }
-        return new RestResponseModel(ResultConstant.SUCCESS, user);
+        return new RestResponseModel(ResultConstant.CBM_SUCCESS, user);
     }
 
     @PostMapping(value = "register")
@@ -50,6 +50,6 @@ public class BaseController {
             return new RestResponseModel(e.getMessage());
         }
 
-        return new RestResponseModel(ResultConstant.SUCCESS);
+        return new RestResponseModel(ResultConstant.CBM_SUCCESS);
     }
 }

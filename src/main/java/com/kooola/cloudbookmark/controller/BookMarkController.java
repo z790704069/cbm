@@ -2,6 +2,7 @@ package com.kooola.cloudbookmark.controller;
 
 import com.kooola.cloudbookmark.common.RestResponseModel;
 import com.kooola.cloudbookmark.common.UserThreadLoacl;
+import com.kooola.cloudbookmark.common.constants.NormalConstant;
 import com.kooola.cloudbookmark.common.constants.ResultConstant;
 import com.kooola.cloudbookmark.domain.BookMark;
 import com.kooola.cloudbookmark.domain.User;
@@ -31,7 +32,7 @@ public class BookMarkController {
      */
     @PostMapping(value = "bookmarks")
     @ResponseBody
-    public RestResponseModel addBookMarkWithUrl(@RequestParam String url, HttpServletRequest request){
+    public RestResponseModel addBookMarkWithUrl(@RequestParam String url, @RequestParam Integer catalogId){
         User user = UserThreadLoacl.getUser();
         WebSiteInfo webSiteInfo = null;
         try{
@@ -46,7 +47,7 @@ public class BookMarkController {
         bookMark.setHost(webSiteInfo.getHost());
         bookMark.setUid(user.getUid());
         bookMarkService.addBookMark(bookMark);
-        return new RestResponseModel(ResultConstant.SUCCESS, bookMark);
+        return new RestResponseModel(ResultConstant.CBM_SUCCESS, bookMark);
     }
 
 
@@ -56,10 +57,11 @@ public class BookMarkController {
      */
     @GetMapping(value = "bookmarks")
     @ResponseBody
-    public RestResponseModel getBookMarks(){
+    public RestResponseModel getBookMarks(@RequestParam(value = "page", defaultValue = "1") int page,
+                                          @RequestParam(value = "limit", defaultValue = NormalConstant.CBM_PAGE_LIMIT_SIZE) int limit){
         User user = UserThreadLoacl.getUser();
-        ArrayList<BookMark> bookMarks = bookMarkService.getBookMarksByUser(user.getUid().intValue());
-        return new RestResponseModel(ResultConstant.SUCCESS, bookMarks);
+        ArrayList<BookMark> bookMarks = bookMarkService.getBookMarksByUser(user.getUid().intValue(), page, limit);
+        return new RestResponseModel(ResultConstant.CBM_SUCCESS, bookMarks);
     }
 
 
@@ -77,7 +79,7 @@ public class BookMarkController {
         }catch (Exception e){
             return new RestResponseModel(ResultConstant.CBM_BOOKMARK_NOT_EXIST);
         }
-        return new RestResponseModel(ResultConstant.SUCCESS);
+        return new RestResponseModel(ResultConstant.CBM_SUCCESS);
     }
 
     /**
@@ -94,8 +96,7 @@ public class BookMarkController {
         }catch (Exception e){
             return new RestResponseModel(ResultConstant.CBM_BOOKMARK_NOT_EXIST);
         }
-        return new RestResponseModel(ResultConstant.SUCCESS);
+        return new RestResponseModel(ResultConstant.CBM_SUCCESS);
     }
-
 
 }

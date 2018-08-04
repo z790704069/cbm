@@ -1,6 +1,7 @@
 package com.kooola.cloudbookmark.dao;
 
 import com.kooola.cloudbookmark.domain.BookMark;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -21,4 +22,6 @@ public interface BookMarkMapper {
     public int updatePointPraiseById(BookMark bookMark);
 
     public int updateIsReadById(BookMark bookMark);
+
+    public ArrayList<BookMark> selectInBmIds(@Param("bmids") ArrayList<Integer> bmids);
 }

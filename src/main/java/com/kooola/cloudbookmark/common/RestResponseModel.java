@@ -49,6 +49,10 @@ public class RestResponseModel<T> implements Serializable{
     }
 
     private void setCodeMsg(String code){
+        //未捕捉，未知错误
+//        if(!ResultConstant.resultInfosMap.containsKey(code)){
+//            code = ResultConstant.CBM_UNKNOWN_ERROR;
+//        }
         setCode(code);
         setMsg(ResultConstant.resultInfosMap.get(code));
         setTimestamp(System.currentTimeMillis() / 1000);

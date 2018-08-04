@@ -26,6 +26,9 @@ public class CatalogServiceImpl implements CatalogService{
     @Override
     public ArrayList<Catalog> getCatalogsByUser(Integer uid, boolean tree) {
         ArrayList<Catalog> catalogs = catalogMapper.selectByUid(uid);
+        if(tree){
+            //目录按照树形结构返回
+        }
         return catalogs;
     }
 

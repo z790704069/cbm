@@ -1,9 +1,12 @@
 package com.kooola.cloudbookmark.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.kooola.cloudbookmark.common.constants.ResultConstant;
 import com.kooola.cloudbookmark.common.exception.MyException;
 import com.kooola.cloudbookmark.dao.BookMarkMapper;
+import com.kooola.cloudbookmark.dao.CatalogBookMarkMapper;
 import com.kooola.cloudbookmark.domain.BookMark;
+import com.kooola.cloudbookmark.domain.CatalogBookMark;
 import com.kooola.cloudbookmark.service.BookMarkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +21,12 @@ public class BookMarkServiceImpl implements BookMarkService {
     @Autowired
     private BookMarkMapper bookMarkMapper;
 
+    @Autowired
+    private CatalogBookMarkMapper catalogBookMarkMapper;
+
     @Override
-    public ArrayList<BookMark> getBookMarksByUser(Integer uid) {
+    public ArrayList<BookMark> getBookMarksByUser(Integer uid, int page, int limit) {
+        PageHelper.startPage(page, limit);
         return bookMarkMapper.selectByUid(uid);
     }
 
@@ -66,4 +73,20 @@ public class BookMarkServiceImpl implements BookMarkService {
         bookMarkMapper.updateIsReadById(bookMark);
         return 0;
     }
+
+    @Override
+    public ArrayList<BookMark> getBookMarksByCatalog(Integer catalogId, int page, int limit) {
+        PageHelper.startPage(page, limit);
+        ArrayList<CatalogBookMark> catalogBookMarks = catalogBookMarkMapper.selectByCatalogId(catalogId.intValue());
+        if(catalogBookMarks.isEmpty()){
+            throw new MyException(ResultConstant.CBM_CATALOG_NO_BOOKMARK);
+        }
+        ArrayList<Integer> bookMarkIds = new ArrayList<>();
+        for(CatalogBookMark catalogBookMark : catalogBookMarks){
+            bookMarkIds.add(catalogBookMark.getBmid().intValue());
+        }
+        ArrayList<BookMark> bookMarks = bookMarkMapper.selectInBmIds(bookMarkIds);
+        return bookMarks;
+    }
+
 }

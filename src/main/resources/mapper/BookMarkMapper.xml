@@ -26,6 +26,20 @@
         where bmid = #{bmid,jdbcType=INTEGER} and logicdelete = 0
     </select>
 
+
+    <select id="selectInBmIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_bookmark
+        <where>
+            bmid in
+            <foreach collection="bmids" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            and logicdelete = 0
+        </where>
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from t_bookmark
         where bmid = #{bmid,jdbcType=INTEGER}
