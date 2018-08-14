@@ -12,7 +12,7 @@ public class ResultConstant {
     public static final String CBM_UNKNOWN_ERROR = "1000";           //未知错误
 
 
-    public static final String CBM_HTML_GET_OR_PARSER_FAIL = "10001";       //抓取页面失败，书签无法生存
+    public static final String CBM_HTML_GET_OR_PARSER_FAIL = "10001";       //抓取页面失败，书签无法生成
 
     public static final String CBM_USERNAME_PASSWD_EMPTY = "20000";  //用户名和密码不能为空
     public static final String CBM_USERNAME_NOT_EXIST = "20001"; //用户不存在

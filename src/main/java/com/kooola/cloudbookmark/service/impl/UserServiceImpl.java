@@ -41,6 +41,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void register(User user) {
+        if(StringUtils.isBlank(user.getUsername()) || StringUtils.isBlank(user.getPassword())){
+            throw new MyException(ResultConstant.CBM_USERNAME_PASSWD_EMPTY); //用户名或密码不能为空
+        }
         if(null != userMapper.selectByUsername(user.getUsername())){
             throw new MyException(ResultConstant.CBM_USER_ALREADY_EXIST);  //用户已经存在
         }

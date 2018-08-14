@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 @RestController
-public class BaseController {
+public class UserController {
 
     @Autowired
     private UserService userService;

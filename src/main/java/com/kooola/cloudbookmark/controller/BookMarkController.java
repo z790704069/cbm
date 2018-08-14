@@ -5,15 +5,20 @@ import com.kooola.cloudbookmark.common.UserThreadLoacl;
 import com.kooola.cloudbookmark.common.constants.NormalConstant;
 import com.kooola.cloudbookmark.common.constants.ResultConstant;
 import com.kooola.cloudbookmark.domain.BookMark;
+import com.kooola.cloudbookmark.domain.ElasticCBMEntity;
 import com.kooola.cloudbookmark.domain.User;
 import com.kooola.cloudbookmark.domain.WebSiteInfo;
 import com.kooola.cloudbookmark.service.BookMarkService;
+import com.kooola.cloudbookmark.service.ElasticSearchService;
 import com.kooola.cloudbookmark.utils.HtmlParserUtil;
+import org.apache.http.nio.protocol.Pipelined;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by march on 2018/8/1.
@@ -24,6 +29,9 @@ public class BookMarkController {
     @Autowired
     private BookMarkService bookMarkService;
 
+    @Autowired
+    private ElasticSearchService elasticSearchService;
+
 
     /**
      * 添加书签(通过传入的url进行爬取该网站的信息形成书签信息并保存)
@@ -32,7 +40,7 @@ public class BookMarkController {
      */
     @PostMapping(value = "bookmarks")
     @ResponseBody
-    public RestResponseModel addBookMarkWithUrl(@RequestParam String url, @RequestParam Integer catalogId){
+    public RestResponseModel addBookMarkWithUrl(@RequestParam String url){
         User user = UserThreadLoacl.getUser();
         WebSiteInfo webSiteInfo = null;
         try{
@@ -99,4 +107,18 @@ public class BookMarkController {
         return new RestResponseModel(ResultConstant.CBM_SUCCESS);
     }
 
+    @GetMapping(value = "bookmarks/search")
+    @ResponseBody
+    public RestResponseModel search(@RequestParam String key){
+        List<ElasticCBMEntity> elasticCBMEntities = elasticSearchService.searchElasticCBMEntity(key);
+        return new RestResponseModel(ResultConstant.CBM_SUCCESS, elasticCBMEntities);
+    }
+
+    @PostMapping(value = "bookmarks/index")
+    @ResponseBody
+    public RestResponseModel index(@RequestParam String key){
+        ElasticCBMEntity elasticCBMEntity = new ElasticCBMEntity(0l, key, "127.0.0.1", "python");
+        elasticSearchService.saveElasticCBMEntity(elasticCBMEntity);
+        return new RestResponseModel(ResultConstant.CBM_SUCCESS);
+    }
 }
