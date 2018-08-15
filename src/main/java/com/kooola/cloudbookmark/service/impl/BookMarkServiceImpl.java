@@ -7,7 +7,9 @@ import com.kooola.cloudbookmark.dao.BookMarkMapper;
 import com.kooola.cloudbookmark.dao.CatalogBookMarkMapper;
 import com.kooola.cloudbookmark.domain.BookMark;
 import com.kooola.cloudbookmark.domain.CatalogBookMark;
+import com.kooola.cloudbookmark.domain.ElasticCBMEntity;
 import com.kooola.cloudbookmark.service.BookMarkService;
+import com.kooola.cloudbookmark.service.ElasticSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,9 @@ public class BookMarkServiceImpl implements BookMarkService {
     @Autowired
     private CatalogBookMarkMapper catalogBookMarkMapper;
 
+    @Autowired
+    private ElasticSearchService elasticSearchService;
+
     @Override
     public ArrayList<BookMark> getBookMarksByUser(Integer uid, int page, int limit) {
         PageHelper.startPage(page, limit);
@@ -36,6 +41,10 @@ public class BookMarkServiceImpl implements BookMarkService {
             bookMark.setCreateTime(System.currentTimeMillis() / 1000);
         }
         bookMarkMapper.insert(bookMark);
+        // 新增标签，将标签加入elasticsearch，供搜索用
+        ElasticCBMEntity elasticCBMEntity = new ElasticCBMEntity(bookMark.getBmid(), bookMark.getTitle(),
+                bookMark.getUrl(), bookMark.getHost(), bookMark.getDescription());
+        elasticSearchService.saveElasticCBMEntity(elasticCBMEntity);
         return 0;
     }
 

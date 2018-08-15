@@ -18,6 +18,8 @@ public class ElasticCBMEntity implements Serializable {
 
     private String description;
 
+    private String url;
+
 
     public Long getBmid() {
         return bmid;
@@ -51,9 +53,19 @@ public class ElasticCBMEntity implements Serializable {
         this.description = description;
     }
 
-    public ElasticCBMEntity(Long bmid, String title, String host, String description){
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public ElasticCBMEntity(Long bmid, String title, String url,
+                            String host, String description){
         this.bmid = bmid;
         this.title = title;
+        this.url = url;
         this.host = host;
         this.description = description;
     }

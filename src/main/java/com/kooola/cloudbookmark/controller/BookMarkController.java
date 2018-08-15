@@ -113,12 +113,4 @@ public class BookMarkController {
         List<ElasticCBMEntity> elasticCBMEntities = elasticSearchService.searchElasticCBMEntity(key);
         return new RestResponseModel(ResultConstant.CBM_SUCCESS, elasticCBMEntities);
     }
-
-    @PostMapping(value = "bookmarks/index")
-    @ResponseBody
-    public RestResponseModel index(@RequestParam String key){
-        ElasticCBMEntity elasticCBMEntity = new ElasticCBMEntity(0l, key, "127.0.0.1", "python");
-        elasticSearchService.saveElasticCBMEntity(elasticCBMEntity);
-        return new RestResponseModel(ResultConstant.CBM_SUCCESS);
-    }
 }
