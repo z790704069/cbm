@@ -19,6 +19,11 @@ public class ResultConstant {
     public static final String CBM_PASSWORD_NOT_RIGHT = "20002"; //密码不正确
     public static final String CBM_USER_ALREADY_EXIST = "20003"; //用户已存在
     public static final String CBM_NOT_LOGIN = "20004";          //用户未登陆（权限控制：无权限）
+    public static final String CBM_ACTIVE_PARAM_EMPTY_FAIL = "20005";   //参数无效，激活失败
+    public static final String CBM_USER_ALEARDY_ACTIVE = "20006";       //用户已激活，无需再激活
+    public static final String CBM_MAKE_ACTIVATION_PARAM_EMPTY_FAIL = "20007";   //参数无效，发起激活请求失败
+    public static final String CBM_ACTIVE_TIME_OVER = "20008";    //激活码过期
+    public static final String CBM_USER_NOT_ACTIVE = "20009";    //用户未激活
 
 
     public static final String CBM_BOOKMARK_NOT_EXIST = "30001";        //该书签不存在
@@ -39,5 +44,10 @@ public class ResultConstant {
         resultInfosMap.put(CBM_HTML_GET_OR_PARSER_FAIL, "抓取页面失败，书签无法生存");
         resultInfosMap.put(CBM_BOOKMARK_NOT_EXIST, "该书签不存在");
         resultInfosMap.put(CBM_CATALOG_NO_BOOKMARK, "目录下无书签");
+        resultInfosMap.put(CBM_ACTIVE_PARAM_EMPTY_FAIL, "参数无效，激活失败");
+        resultInfosMap.put(CBM_USER_ALEARDY_ACTIVE, "用户已激活，无需再激活");
+        resultInfosMap.put(CBM_MAKE_ACTIVATION_PARAM_EMPTY_FAIL, "参数无效，发起激活请求失败");
+        resultInfosMap.put(CBM_ACTIVE_TIME_OVER, "激活码过期");
+        resultInfosMap.put(CBM_USER_NOT_ACTIVE, "用户未激活");
     }
 }

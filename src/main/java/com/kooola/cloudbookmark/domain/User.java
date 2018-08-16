@@ -12,7 +12,7 @@ public class User implements Serializable{
      */
     private Long uid;
     /**
-     * 用户昵称
+     * 用户名
      */
     private String username;
     /**
@@ -51,6 +51,16 @@ public class User implements Serializable{
      * 盐，用于增强密码加密
      */
     private String salt;
+
+    /**
+     * 是否已经激活 0：未激活 1：已激活
+     */
+    private Integer activation;
+
+    /**
+     * 激活码
+     */
+    private String activationCode;
 
     public Long getUid() {
         return uid;
@@ -138,5 +148,21 @@ public class User implements Serializable{
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public Integer getActivation() {
+        return activation;
+    }
+
+    public void setActivation(Integer activation) {
+        this.activation = activation;
+    }
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
     }
 }

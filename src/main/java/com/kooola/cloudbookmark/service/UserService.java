@@ -9,4 +9,8 @@ public interface UserService {
     public User login(String username, String password);
 
     public void register(User user);
+
+    public void active(String email, String code);
+
+    public void makeActivation(String email);
 }

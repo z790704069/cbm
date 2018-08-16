@@ -9,9 +9,11 @@ public interface UserMapper {
 
     public User selectByPrimaryKey(Integer uid);
 
-    public User selectByUsername(String username);
+    public User selectByEmail(String email);
 
     public int deleteByPrimaryKey(Integer uid);
 
     public int insert(User user);
+
+    public int updateActivationByUId(User user);
 }

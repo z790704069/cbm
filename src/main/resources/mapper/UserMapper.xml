@@ -13,10 +13,13 @@
         <result column="age" jdbcType="INTEGER" property="age" />
         <result column="introduction" jdbcType="VARCHAR" property="introduction" />
         <result column="salt" jdbcType="VARCHAR" property="salt" />
+        <result column="activation" jdbcType="INTEGER" property="activation" />
+        <result column="activation_code" jdbcType="VARCHAR" property="activationCode" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        uid, username, password, email, create_time, update_time, last_login_time, sex, age, introduction, salt
+        uid, username, password, email, create_time, update_time, last_login_time,
+        sex, age, introduction, salt, activation, activation_code
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -26,11 +29,11 @@
         where uid = #{uid,jdbcType=INTEGER}
     </select>
 
-    <select id = "selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id = "selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from t_user
-        where username = #{username,jdbcType=VARCHAR}
+        where email = #{email,jdbcType=VARCHAR}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -40,11 +43,18 @@
 
     <insert id="insert" parameterType="com.kooola.cloudbookmark.domain.User" useGeneratedKeys="true" keyProperty="uid">
         insert into t_user (uid, username, password, email, create_time,
-        update_time,last_login_time, sex, age, introduction, salt)
+        update_time,last_login_time, sex, age, introduction, salt, activation, activation_code)
         values (#{uid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
         #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=INTEGER}, #{updateTime,jdbcType=INTEGER},
         #{lastLoginTime,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, #{age,jdbcType=INTEGER},
-        #{introduction,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR})
+        #{introduction,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{activation,jdbcType=INTEGER},
+        #{activationCode,jdbcType=VARCHAR})
     </insert>
+
+    <update id="updateActivationByUId" parameterType="com.kooola.cloudbookmark.domain.User">
+        update t_user
+        set activation = #{activation, jdbcType=INTEGER}
+        where uid = #{uid,jdbcType=INTEGER}
+    </update>
 
 </mapper>

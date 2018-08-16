@@ -34,6 +34,8 @@ public class LoginFilter implements Filter{
     public void init(FilterConfig filterConfig) throws ServletException {
         greenUrlSet.add("/login");
         greenUrlSet.add("/register");
+        greenUrlSet.add("/user/active");
+        greenUrlSet.add("/user/makeActivation");
         greenUrlSet.add("/");
         greenUrlSet.add("/about");
         greenUrlSet.add("/favicon.ico");

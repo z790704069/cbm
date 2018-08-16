@@ -3,6 +3,7 @@ package com.kooola.cloudbookmark.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.kooola.cloudbookmark.common.constants.ResultConstant;
 import com.kooola.cloudbookmark.common.exception.MyException;
+import com.kooola.cloudbookmark.common.filter.LoginFilter;
 import com.kooola.cloudbookmark.dao.BookMarkMapper;
 import com.kooola.cloudbookmark.dao.CatalogBookMarkMapper;
 import com.kooola.cloudbookmark.domain.BookMark;
@@ -10,6 +11,8 @@ import com.kooola.cloudbookmark.domain.CatalogBookMark;
 import com.kooola.cloudbookmark.domain.ElasticCBMEntity;
 import com.kooola.cloudbookmark.service.BookMarkService;
 import com.kooola.cloudbookmark.service.ElasticSearchService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
