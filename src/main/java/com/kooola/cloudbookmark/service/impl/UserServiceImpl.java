@@ -130,7 +130,8 @@ public class UserServiceImpl implements UserService{
         userMapper.updateActivationByUId(user);
 
         //组装邮件验证（激活链接）
-        String url = "http://localhost:8080/user/active?email=" + user.getEmail() + "&code=" + uuid.toString();
+        String url = NormalConstant.CBM_MAKE_ACTIVATION_URL + "?email=" +
+                user.getEmail() + "&code=" + uuid.toString();
         LOG.info("Email message for activation of user: " + url);
         try{
             MailUtil.sendMailMessage(user.getEmail(), url);

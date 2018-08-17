@@ -72,7 +72,7 @@ public class UserController {
      * @param code 激活码
      * @return
      */
-    @PutMapping(value = "/user/active")
+    @GetMapping(value = "/user/active")
     @ResponseBody
     public RestResponseModel doActive(@RequestParam String email, @RequestParam String code){
         if(StringUtils.isBlank(email) || StringUtils.isBlank(code)){
@@ -81,7 +81,7 @@ public class UserController {
         try{
             userService.active(email, code);
         }catch (Exception e){
-            new RestResponseModel(e.getMessage());
+            return new RestResponseModel(e.getMessage());
         }
         return new RestResponseModel(ResultConstant.CBM_SUCCESS);
     }

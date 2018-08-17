@@ -40,7 +40,8 @@ public class MailUtil {
         message.setSubject(NormalConstant.CBM_MAIL_NICKNAME, "UTF-8");
 
         // 5. Content: 邮件正文（可以使用html标签）（内容有广告嫌疑，避免被邮件服务器误认为是滥发广告以至返回失败，请修改发送内容）
-        message.setContent(msg, "text/html;charset=UTF-8");
+
+        message.setContent(cbmMailMsg(msg), "text/html;charset=UTF-8");
 
         // 6. 设置发件时间
         message.setSentDate(new Date());
@@ -55,6 +56,18 @@ public class MailUtil {
         transport.sendMessage(message, message.getAllRecipients());
 
         transport.close();
+    }
+
+    /**
+     * 修饰原始邮件内容，增加用户体验
+     * @param msg
+     * @return
+     */
+    private static String cbmMailMsg(String msg){
+        String content = "<title>云书签</title>";
+        content = content + "<p>您好，欢迎使用云书签！此邮件为官方激活邮件，在开始使用前，请点击下面的链接进行激活。</p>";
+        content = content + "<p><a href=" + msg + ">点击这里激活</a></p>";
+        return  content;
     }
 
     public static void main(String[] args) throws Exception{
