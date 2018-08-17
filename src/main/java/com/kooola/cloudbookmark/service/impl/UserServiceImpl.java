@@ -75,15 +75,13 @@ public class UserServiceImpl implements UserService{
         userMapper.insert(user);
 
         //组装邮件验证（激活链接）
-        String url = "http://localhost:8080/user/active?email=" + user.getEmail() + "&code=" + uuid.toString();
+        String url = NormalConstant.CBM_MAKE_ACTIVATION_URL + "?email=" + user.getEmail() + "&code=" + uuid.toString();
         LOG.info("Email message for activation of user: " + url);
         try{
             MailUtil.sendMailMessage(user.getEmail(), url);
         }catch (Exception e){
-            e.printStackTrace();
+            throw new MyException(ResultConstant.CBM_SEND_MAIL_ACTIVE_FAIL);
         }
-
-        return ;
     }
 
     /**
@@ -135,8 +133,8 @@ public class UserServiceImpl implements UserService{
         LOG.info("Email message for activation of user: " + url);
         try{
             MailUtil.sendMailMessage(user.getEmail(), url);
-        }catch (Exception e){
-            e.printStackTrace();
+        }catch (Exception e) {
+            throw new MyException(ResultConstant.CBM_SEND_MAIL_ACTIVE_FAIL);
         }
     }
 }

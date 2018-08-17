@@ -67,7 +67,7 @@ public class MailUtil {
         String content = "<title>云书签</title>";
         content = content + "<p>您好，欢迎使用云书签！此邮件为官方激活邮件，在开始使用前，请点击下面的链接进行激活。</p>";
         content = content + "<p><a href=" + msg + ">点击这里激活</a></p>";
-        return  content;
+        return content;
     }
 
     public static void main(String[] args) throws Exception{

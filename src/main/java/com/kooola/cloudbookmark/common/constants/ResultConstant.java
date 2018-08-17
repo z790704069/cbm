@@ -24,6 +24,7 @@ public class ResultConstant {
     public static final String CBM_MAKE_ACTIVATION_PARAM_EMPTY_FAIL = "20007";   //参数无效，发起激活请求失败
     public static final String CBM_ACTIVE_TIME_OVER = "20008";    //激活码过期
     public static final String CBM_USER_NOT_ACTIVE = "20009";    //用户未激活
+    public static final String CBM_SEND_MAIL_ACTIVE_FAIL = "20010";      //发送激活邮件失败
 
 
     public static final String CBM_BOOKMARK_NOT_EXIST = "30001";        //该书签不存在
