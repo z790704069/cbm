@@ -85,7 +85,7 @@ public class BookMarkController {
         try{
             bookMarkService.pointPraise(bmid, up);
         }catch (Exception e){
-            return new RestResponseModel(ResultConstant.CBM_BOOKMARK_NOT_EXIST);
+            return new RestResponseModel(e.getMessage());
         }
         return new RestResponseModel(ResultConstant.CBM_SUCCESS);
     }
@@ -102,7 +102,7 @@ public class BookMarkController {
         try{
             bookMarkService.read(bmid, isRead);
         }catch (Exception e){
-            return new RestResponseModel(ResultConstant.CBM_BOOKMARK_NOT_EXIST);
+            return new RestResponseModel(e.getMessage());
         }
         return new RestResponseModel(ResultConstant.CBM_SUCCESS);
     }

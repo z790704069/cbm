@@ -1,7 +1,6 @@
 package com.kooola.cloudbookmark.utils;
 
 import com.kooola.cloudbookmark.common.constants.NormalConstant;
-import org.omg.CORBA.NO_IMPLEMENT;
 
 import java.util.Properties;
 import javax.mail.Session;
@@ -23,7 +22,13 @@ public class MailUtil {
         Properties props = new Properties();                    // 参数配置
         props.setProperty("mail.transport.protocol", "smtp");   // 使用的协议（JavaMail规范要求）
         props.setProperty("mail.smtp.host", NormalConstant.CBM_MAIL_STMP_ADDRESS);   // 发件人的邮箱的 SMTP 服务器地址
+        final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+        props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
+        props.setProperty("mail.smtp.socketFactory.fallback", "false");
         props.setProperty("mail.smtp.auth", "true");
+        // 可恶的ALI云禁用了25端口的出方向,只能使用ssl的465端口
+        props.setProperty("mail.smtp.port", "465");
+        props.setProperty("mail.smtp.socketFactory.port", "465");
 
         Session session = Session.getInstance(props);
 

@@ -50,5 +50,6 @@ public class ResultConstant {
         resultInfosMap.put(CBM_MAKE_ACTIVATION_PARAM_EMPTY_FAIL, "参数无效，发起激活请求失败");
         resultInfosMap.put(CBM_ACTIVE_TIME_OVER, "激活码过期");
         resultInfosMap.put(CBM_USER_NOT_ACTIVE, "用户未激活");
+        resultInfosMap.put(CBM_SEND_MAIL_ACTIVE_FAIL, "发送激活邮件失败");
     }
 }

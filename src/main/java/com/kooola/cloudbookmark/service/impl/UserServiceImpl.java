@@ -44,6 +44,9 @@ public class UserServiceImpl implements UserService{
         if(!SecurityUtil.MD5encode(password).equals(user.getPassword())){
             throw new MyException(ResultConstant.CBM_PASSWORD_NOT_RIGHT);  //密码不正确
         }
+        //隐藏密码和盐
+        user.setPassword(null);
+        user.setSalt(null);
         return user;
     }
 

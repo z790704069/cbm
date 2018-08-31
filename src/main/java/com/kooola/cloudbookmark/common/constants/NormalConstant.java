@@ -18,5 +18,7 @@ public class NormalConstant {
 
     public static final Long CBM_ACTIVE_DURING_TIME = 300l;    //获取激活链接到实际激活，最长不能超过的时间
 
-    public static final String CBM_MAKE_ACTIVATION_URL = "http://localhost:8080/user/active"; //用户邮箱激活url
+//    public static final String CBM_MAKE_ACTIVATION_URL = "http://localhost:8080/user/active"; //用户邮箱激活url
+
+    public static final String CBM_MAKE_ACTIVATION_URL = "http://47.95.242.162:8080/user/active"; //用户邮箱激活url
 }
