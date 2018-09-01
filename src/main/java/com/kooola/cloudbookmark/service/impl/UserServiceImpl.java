@@ -140,4 +140,22 @@ public class UserServiceImpl implements UserService{
             throw new MyException(ResultConstant.CBM_SEND_MAIL_ACTIVE_FAIL);
         }
     }
+
+    /**
+     * 修改用户密码
+     * @param user 当前用户
+     * @param oldPasswd  旧密码
+     * @param newPasswd  新密码
+     * 1、判断旧密码是否是当前用户密码
+     * 2、修改密码
+     */
+    @Override
+    public void changePasswd(User user, String oldPasswd, String newPasswd) {
+        String salt = user.getSalt();
+        String passwd = SecurityUtil.MD5encode((oldPasswd + salt));
+        if(!passwd.equals(user.getPassword())){
+            throw new MyException(ResultConstant.CBM_PASSWORD_NOT_RIGHT);
+        }
+        user.setPassword(SecurityUtil.MD5encode(newPasswd + salt));
+    }
 }

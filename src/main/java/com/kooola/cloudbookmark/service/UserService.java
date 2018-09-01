@@ -13,4 +13,6 @@ public interface UserService {
     public void active(String email, String code);
 
     public void makeActivation(String email);
+
+    public void changePasswd(User user, String oldPasswd, String newPasswd);
 }

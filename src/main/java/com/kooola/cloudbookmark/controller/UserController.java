@@ -1,6 +1,7 @@
 package com.kooola.cloudbookmark.controller;
 
 import com.kooola.cloudbookmark.common.RestResponseModel;
+import com.kooola.cloudbookmark.common.UserThreadLoacl;
 import com.kooola.cloudbookmark.common.constants.ResultConstant;
 import com.kooola.cloudbookmark.common.constants.WebConst;
 import com.kooola.cloudbookmark.common.exception.MyException;
@@ -25,6 +26,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 用户登录
+     * @param email   登录邮箱
+     * @param password 密码
+     * @param remeber_me
+     * @param request
+     * @param response
+     * @return
+     */
     @PostMapping(value = "login")
     @ResponseBody
     public RestResponseModel doLogin(@RequestParam String email, @RequestParam String password,
@@ -43,6 +53,12 @@ public class UserController {
         return new RestResponseModel(ResultConstant.CBM_SUCCESS, user);
     }
 
+    /**
+     * 用户登出
+     * @param request
+     * @param response
+     * @return
+     */
     @PostMapping(value = "logout")
     @ResponseBody
     public RestResponseModel doLogout(HttpServletRequest request, HttpServletResponse response){
@@ -54,6 +70,11 @@ public class UserController {
         return new RestResponseModel(ResultConstant.CBM_SUCCESS);
     }
 
+    /**
+     * 用户注册
+     * @param user
+     * @return
+     */
     @PostMapping(value = "register")
     @ResponseBody
     public RestResponseModel doRegister(User user){
@@ -65,6 +86,34 @@ public class UserController {
 
         return new RestResponseModel(ResultConstant.CBM_SUCCESS);
     }
+
+
+    /**
+     * 用户修改密码
+     * @param oldPasswd  旧密码
+     * @param newPasswd  新密码
+     * @return
+     */
+    @PostMapping(value = "/user/chagepasswd")
+    @ResponseBody
+    public RestResponseModel changePasswd(@RequestParam String oldPasswd, @RequestParam String newPasswd){
+        if(StringUtils.isBlank(newPasswd) || StringUtils.isBlank(oldPasswd)){
+            return new RestResponseModel(ResultConstant.CBM_PARAM_MISSING);   //必要参数不能为空
+        }
+        if(newPasswd.equals(oldPasswd)){
+            return new RestResponseModel(ResultConstant.CBM_OLD_NEW_PASSWD_SAME);  //新旧密码不能相同
+        }
+        User user = UserThreadLoacl.getUser();
+        try{
+            userService.changePasswd(user, oldPasswd, newPasswd);
+        }catch (Exception e){
+            return new RestResponseModel(e.getMessage());
+        }
+        return new RestResponseModel(ResultConstant.CBM_SUCCESS);
+    }
+
+
+
 
     /**
      * 激活用户,用户拿自己邮箱中url进行请求
