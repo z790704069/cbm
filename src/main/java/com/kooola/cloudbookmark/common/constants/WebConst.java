@@ -12,7 +12,7 @@ public class WebConst {
     /**
      * 用户cookie name,保存用户id
      */
-    public static final String USER_IN_COOKIE = "C_USER_ID_KEY";
+    public static final String USER_IN_COOKIE = "MARK_MOUSE_USER_ID_KEY";
 
     /**
      * aes加密加盐

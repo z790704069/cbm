@@ -5,7 +5,7 @@ import com.kooola.cloudbookmark.domain.User;
 /**
  * Created by march on 2018/8/1.
  */
-public class UserThreadLoacl {
+public class UserThreadLocal {
     private static ThreadLocal<User> threadLocal=new ThreadLocal<User>();
 
     public static void setValue(User user){

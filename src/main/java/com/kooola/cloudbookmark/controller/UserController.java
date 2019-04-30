@@ -1,10 +1,9 @@
 package com.kooola.cloudbookmark.controller;
 
 import com.kooola.cloudbookmark.common.RestResponseModel;
-import com.kooola.cloudbookmark.common.UserThreadLoacl;
+import com.kooola.cloudbookmark.common.UserThreadLocal;
 import com.kooola.cloudbookmark.common.constants.ResultConstant;
 import com.kooola.cloudbookmark.common.constants.WebConst;
-import com.kooola.cloudbookmark.common.exception.MyException;
 import com.kooola.cloudbookmark.domain.User;
 import com.kooola.cloudbookmark.service.UserService;
 import com.kooola.cloudbookmark.utils.HttpUtil;
@@ -37,6 +36,7 @@ public class UserController {
      */
     @PostMapping(value = "login")
     @ResponseBody
+    @CrossOrigin("*")
     public RestResponseModel doLogin(@RequestParam String email, @RequestParam String password,
                                      @RequestParam(required = false) String remeber_me,
                                      HttpServletRequest request, HttpServletResponse response){
@@ -44,7 +44,7 @@ public class UserController {
         try{
             user = userService.login(email, password);
             request.getSession().setAttribute(WebConst.LOGIN_SESSION_KEY, user);
-            if(StringUtils.isNotBlank(remeber_me)){
+            if(StringUtils.isNotBlank(remeber_me) && remeber_me.equals("true")){
                 HttpUtil.setCookie(response, user.getUid());
             }
         }catch (Exception e){
@@ -103,7 +103,7 @@ public class UserController {
         if(newPasswd.equals(oldPasswd)){
             return new RestResponseModel(ResultConstant.CBM_OLD_NEW_PASSWD_SAME);  //新旧密码不能相同
         }
-        User user = UserThreadLoacl.getUser();
+        User user = UserThreadLocal.getUser();
         try{
             userService.changePasswd(user, oldPasswd, newPasswd);
         }catch (Exception e){

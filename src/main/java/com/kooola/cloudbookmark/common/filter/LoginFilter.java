@@ -1,7 +1,7 @@
 package com.kooola.cloudbookmark.common.filter;
 
 import com.kooola.cloudbookmark.common.RestResponseModel;
-import com.kooola.cloudbookmark.common.UserThreadLoacl;
+import com.kooola.cloudbookmark.common.UserThreadLocal;
 import com.kooola.cloudbookmark.common.constants.ResultConstant;
 import com.kooola.cloudbookmark.common.constants.WebConst;
 import com.kooola.cloudbookmark.dao.UserMapper;
@@ -63,7 +63,7 @@ public class LoginFilter implements Filter{
             LOG.info("http request: {}, params: {}, ip: {},http method: {}, UserAgent: {}, User: {}",
                     uri, params, HttpUtil.getIpAddrByRequest(request), request.getMethod(),
                     request.getHeader(USER_AGENT), user.getEmail());
-            UserThreadLoacl.setValue(user);
+            UserThreadLocal.setValue(user);
             filterChain.doFilter(servletRequest,servletResponse);
             return;
         }
@@ -73,7 +73,7 @@ public class LoginFilter implements Filter{
         if(null != uid){
             user = userMapper.selectByPrimaryKey(uid);
             request.getSession().setAttribute(WebConst.LOGIN_SESSION_KEY, user);
-            UserThreadLoacl.setValue(user);
+            UserThreadLocal.setValue(user);
             LOG.info("http request: {}, params: {}, ip: {},http method: {}, UserAgent: {}, User: {}",
                     uri, params, HttpUtil.getIpAddrByRequest(request), request.getMethod(),
                     request.getHeader(USER_AGENT), user.getEmail());

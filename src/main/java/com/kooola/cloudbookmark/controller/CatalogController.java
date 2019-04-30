@@ -1,7 +1,7 @@
 package com.kooola.cloudbookmark.controller;
 
 import com.kooola.cloudbookmark.common.RestResponseModel;
-import com.kooola.cloudbookmark.common.UserThreadLoacl;
+import com.kooola.cloudbookmark.common.UserThreadLocal;
 import com.kooola.cloudbookmark.common.constants.NormalConstant;
 import com.kooola.cloudbookmark.common.constants.ResultConstant;
 import com.kooola.cloudbookmark.domain.BookMark;
@@ -29,7 +29,7 @@ public class CatalogController {
     @GetMapping(value = "catalogs")
     @ResponseBody
     public RestResponseModel getCatalogs(){
-        User user = UserThreadLoacl.getUser();
+        User user = UserThreadLocal.getUser();
         ArrayList<Catalog> catalogs = catalogService.getCatalogsByUser(user.getUid().intValue(), true);
         return new RestResponseModel(ResultConstant.CBM_SUCCESS, catalogs);
     }
@@ -37,7 +37,7 @@ public class CatalogController {
     @PostMapping(value = "catalogs")
     @ResponseBody
     public RestResponseModel addCatalog(Catalog catalog){
-        User user = UserThreadLoacl.getUser();
+        User user = UserThreadLocal.getUser();
         catalog.setUid(user.getUid());
         try{
             catalogService.addCatalog(catalog);

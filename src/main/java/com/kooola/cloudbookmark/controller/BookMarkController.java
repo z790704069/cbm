@@ -1,7 +1,7 @@
 package com.kooola.cloudbookmark.controller;
 
 import com.kooola.cloudbookmark.common.RestResponseModel;
-import com.kooola.cloudbookmark.common.UserThreadLoacl;
+import com.kooola.cloudbookmark.common.UserThreadLocal;
 import com.kooola.cloudbookmark.common.constants.NormalConstant;
 import com.kooola.cloudbookmark.common.constants.ResultConstant;
 import com.kooola.cloudbookmark.domain.BookMark;
@@ -11,13 +11,10 @@ import com.kooola.cloudbookmark.domain.WebSiteInfo;
 import com.kooola.cloudbookmark.service.BookMarkService;
 import com.kooola.cloudbookmark.service.ElasticSearchService;
 import com.kooola.cloudbookmark.utils.HtmlParserUtil;
-import org.apache.http.nio.protocol.Pipelined;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -41,7 +38,7 @@ public class BookMarkController {
     @PostMapping(value = "bookmarks")
     @ResponseBody
     public RestResponseModel addBookMarkWithUrl(@RequestParam String url){
-        User user = UserThreadLoacl.getUser();
+        User user = UserThreadLocal.getUser();
         WebSiteInfo webSiteInfo = null;
         try{
             webSiteInfo = HtmlParserUtil.process(url);
@@ -67,7 +64,7 @@ public class BookMarkController {
     @ResponseBody
     public RestResponseModel getBookMarks(@RequestParam(value = "page", defaultValue = "1") int page,
                                           @RequestParam(value = "limit", defaultValue = NormalConstant.CBM_PAGE_LIMIT_SIZE) int limit){
-        User user = UserThreadLoacl.getUser();
+        User user = UserThreadLocal.getUser();
         ArrayList<BookMark> bookMarks = bookMarkService.getBookMarksByUser(user.getUid().intValue(), page, limit);
         return new RestResponseModel(ResultConstant.CBM_SUCCESS, bookMarks);
     }
